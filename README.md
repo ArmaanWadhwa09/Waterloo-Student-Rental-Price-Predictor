@@ -331,4 +331,5 @@ The user interface is a clean, responsive web form generated via AI prompt engin
 - Handles missing optional inputs gracefully and includes error handling for failed API calls
 
 This separation of frontend (GitHub Pages) and backend (Render) simplifies development and deployment workflows.
+
 [Back to Tables of Contents](#Tables-of-Contents)
