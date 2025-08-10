@@ -1,6 +1,19 @@
 # Waterloo Student Rental Predictor  
 **TL;DR**: ML-powered tool that predicts fair rent prices and detects scams for Waterloo students
-# Tables of Contents 
+## 🚀 Try the Model
+➡️ Web App: https://armaanwadhwa09.github.io/Waterloo-Student-Rental-Price-Predictor-Frontend/ 
+
+*(No installation needed - test predictions directly in your browser)*
+
+⚠️ First-Time Usage Tips:
+Render's free tier spins down inactive servers - If first request takes more than 10 secs do the following:
+1. Fill all fields (including optional ones) for the initial prediction.
+2. Expected runtime: 5-10 seconds. If it takes longer:
+   - Refresh the page
+   - Ensure all fields are populated
+3. After the first successful prediction, you may leave optional fields blank or fill them (dealer's choice).
+
+## Tables of Contents 
 - [Introduction](#Introduction)
 - [Step-by-step Guide](#Step-by-step-Guide)
 - [Inspiration](#Inspiration)
