@@ -26,7 +26,7 @@ price_model = joblib.load("price_prediction_xgb.pkl")
 # Features for each model
 iso_features = [
     "Available_Room_Pct", "Furnished_X_Internet", "Is_Luxury_Setup", "Baths",
-    "Sqft_per_Room", "Bathroom_Ratio", "Amenity_Score", "Is_Pet_Friendly", "Parking_X_Pet"
+    "Sqft_per_Room", "Bathroom_Ratio", "Amenity_Score", "Is_Pet_Friendly","Parking_X_Pet"
 ]
 price_features = [
     "Shared_Quality", "Baths", "Is_Shared_Setup", "Bed_Bath_Ratio", "Total_Rooms",
