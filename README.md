@@ -117,7 +117,109 @@ The final dataset contains only:
    - **Correlation Analysis**: Generated correlation matrices to identify relationships between features and target variables.
    - **Distribution Analysis**: Visualized feature distributions using histograms, KDE plots, and box plots to understand data spread and detect outliers.
 
-[Alt](Figure_1.png)
+![Alt text](Figure_1.png)
+![Alt text](Figure2.png)
 
-[Alt](Figure2.png)
+### Feature Engineering Overview
 
+- Created over 130 features tailored for Waterloo student rentals.
+- Focused on capturing key aspects affecting price and desirability.
+
+Key feature groups:
+
+- **Property Space Metrics:**  
+  Room density, square footage per room, bathroom ratios, occupancy rates etc to measure space efficiency and overcrowding.
+
+- **Binary Flags:**  
+  Indicators like studio units, luxury setups, overcrowding to highlight typical and special cases.
+
+- **Location Features:**  
+  Distance to campus categorized into tiers, estimated walk/bike times, and accessibility scores reflecting student preferences.
+
+- **Lease Dynamics:**  
+  Lease duration tiers, seasonal demand flags, and interactions with location to capture academic calendar effects.
+
+- **Amenity Analysis:**  
+  Furnishing, parking, internet, pet-friendliness flags plus interaction terms to model bundled amenity appeal.
+
+- **Anomaly Indicators:**  
+  Flags for unusual density, amenity mismatches, and statistical outliers to improve detection of suspicious listings.
+
+### Isolation Forest (ISO) - Anomaly Detection
+
+#### Model Selection
+- Chose Isolation Forest for its effectiveness with mixed numeric and categorical data (after encoding) without heavy scaling.
+- Compared with Local Outlier Factor (LOF) and ensemble methods; ISO provided more stable results and fewer false positives.
+- Computationally efficient on 15,000+ records, enabling iterative development and tuning.
+- Hyperparameters tuned using grid search to optimize anomaly detection performance.
+
+#### Feature Reduction and Hyperparameter Tuning
+- Removed features with high correlation (threshold > 0.9) to reduce redundancy.
+- Trained a Random Forest Regressor to approximate Isolation Forest anomaly scores.
+- Ranked features by importance and applied permutation importance testing to validate impact.
+- Selected top 9 most important features for the final ISO model to reduce noise and improve performance.
+
+#### Results
+- Produced stable and interpretable anomaly scores highlighting outliers such as overpriced listings or inconsistent amenity setups.
+- Demonstrated lower false positive rates compared to LOF in dense student housing clusters.
+- Enabled fast inference for real-time anomaly detection within the API.
+
+---
+
+### XGBoost (XGB) - Rental Price Prediction
+
+#### Model Selection
+- Evaluated XGBoost alongside LightGBM, CatBoost, and ensemble models for regression.
+- XGBoost outperformed alternatives in terms of R² and RMSE metrics on validation data.
+- Employed Optuna for automated hyperparameter optimization to maximize predictive accuracy.
+
+#### Feature Reduction and Hyperparameter Tuning
+- Eliminated highly correlated and weakly correlated features with the target variable.
+- Applied Recursive Feature Elimination (RFE) to refine the feature set.
+- Finalized on 10 most predictive features representing rental, room, and lease characteristics.
+
+#### Results
+- Achieved R² greater than 0.8 on validation datasets, indicating strong explanatory power.
+- Delivered low RMSE, providing accurate rental price estimates.
+- Supported actionable insights by flagging over- or under-priced listings compared to predicted values.
+
+### Top Features Used in Models
+
+**Isolation Forest (Anomaly Detection) Features:**
+- `Available_Room_Pct`: Percentage of available rooms relative to total rooms.
+- `Furnished_X_Internet`: Interaction term indicating presence of both furnishing and internet.
+- `Is_Luxury_Setup`: Flag for luxury configurations (e.g., multiple baths, large sqft).
+- `Baths`: Number of bathrooms.
+- `Sqft_per_Room`: Average square footage per room.
+- `Bathroom_Ratio`: Ratio of bathrooms to total rooms.
+- `Amenity_Score`: Aggregate score of key amenities (furnishing, parking, internet, pet-friendly).
+- `Is_Pet_Friendly`: Binary flag indicating pet-friendly status.
+- `Parking_X_Pet`: Interaction term between parking availability and pet-friendliness.
+
+**XGBoost (Price Prediction) Features:**
+- `Shared_Quality`: Measure of shared room condition or quality.
+- `Baths`: Number of bathrooms.
+- `Is_Shared_Setup`: Flag indicating if the unit is a shared setup.
+- `Bed_Bath_Ratio`: Ratio of bedrooms to bathrooms.
+- `Total_Rooms`: Total number of rooms.
+- `Bathroom_Ratio`: Ratio of bathrooms to total rooms.
+- `Available_Room_Pct`: Percentage of rooms available.
+- `Is_Balanced`: Flag for balanced room-to-bath ratio.
+- `Is_Spacious`: Indicator for larger-than-average space.
+- `Rooms_Available`: Number of rooms currently available.
+
+### FastAPI Backend Overview
+
+The backend is built with FastAPI to provide a lightweight, high-performance API for rental listing evaluation. It handles:
+
+- **Data Completion:** Automatically fills missing inputs (e.g., estimates square footage based on rooms, assumes pet-friendly or furnished status with realistic probabilities) to ensure robust predictions even when users provide incomplete data.
+
+- **Feature Engineering:** Transforms raw inputs into the 9 key features used for anomaly detection and price prediction in real-time.
+
+- **Anomaly Detection:** Uses the trained Isolation Forest model to identify unusual listings based on learned student rental patterns.
+
+- **Price Prediction:** Runs the XGBoost model to estimate fair market rent and compares it with user input to flag potential overpricing or underpricing.
+
+- **Combined Assessment:** Integrates rule-based checks with ML model outputs to provide a comprehensive anomaly flag and detailed explanations for flagged listings.
+
+The API returns structured JSON responses with predicted price, pricing status, anomaly flags, and user-friendly explanations to support informed rental decisions.
