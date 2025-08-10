@@ -2,6 +2,21 @@
 **TL;DR**: ML-powered tool that predicts fair rent prices and detects scams for Waterloo students
 # Tables of Contents 
 - [Introduction](#Introduction)
+- [Step-by-step Guide](#Step-by-step-Guide)
+- [Inspiration](#Inspiration)
+- [Data Gathering](#Data-Gathering)
+- [Feature Engineering with Synthetic Rental Data](#Feature-Engineering-with-Synthetic-Rental-Data)
+- [Data Preparation and Exploratory Data Analysis](#Data-Preparation-and-Exploratory-Data-Analysis)
+- [Feature Engineering Overview](#Feature-Engineering-Overview)
+- [Isolation Forest (ISO) - Anomaly Detection](#Isolation-Forest-(ISO)---Anomaly-Detection)
+- [XGBoost (XGB) - Rental Price Prediction](#XGBoost-(XGB)---Rental-Price-Prediction)
+- [Top Features Used in Models](#Top-Features-Used-in-Models)
+- [FastAPI Backend Overview](#FastAPI-Backend-Overview)
+- [Deployment](#Deployment)
+   - [Docker Containerization](#Docker-Containerization)
+   - [Render Cloud Hosting](#Render-Cloud-Hosting)
+   - [Frontend on GitHub Pages](#Frontend-on-GitHub-Pages)
+  
 ## Introduction
 Welcome to the Waterloo Student Rental Predictor! This project helps students make smarter rental decisions by predicting fair prices and flagging unusual listings in the Waterloo student housing market.
 
@@ -9,6 +24,8 @@ Built on real [Bamboo Housing](https://bamboohousing.ca) data, enhanced with syn
 
 The system includes a fast API and an easy-to-use web frontend, deployed on modern cloud infrastructure.
 If you’re a student hunting for a good deal, this project provides clear, actionable insights with a clean and intuitive user experience.
+
+[Back to Tables of Contents](#Tables-of-Contents)
 ## Step-by-step Guide  
 
 1. **Data Collection**  
@@ -35,6 +52,7 @@ If you’re a student hunting for a good deal, this project provides clear, acti
 8. **Frontend**  
    Create a responsive web form to submit listings and display results, including predicted price, price status, anomaly flags, and detailed feedback.
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ## Inspiration :sparkles:
 
 Finding affordable, fairly priced housing near campus is a big challenge for many students, especially international or out-of-town students new to the area. Without good info or tools, it’s easy to overpay or rent places that don’t meet expectations.  
@@ -46,6 +64,7 @@ Other strugles students face:
 - Spotting fraudulent or poor-quality listings.  
 - Dealing with seasonal price changes and demand.
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ## Data Gathering
 
 One of the biggest challenges when looking for off-campus housing is avoiding scams and ensuring that the people you’re dealing with are genuine. Bamboo Housing solves this by requiring student verification for all users, as you can only post or book listings if you’re a verified student.
@@ -108,6 +127,7 @@ The final dataset contains only:
   - Square_Footage: Assigned based on average square footage for a standard room, with variations to reflect real-world ranges.  
 ```
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ## Data Preparation and Exploratory Data Analysis
 
 **Data Preprocessing**
@@ -148,6 +168,7 @@ Key feature groups:
 - **Anomaly Indicators:**  
   Flags for unusual density, amenity mismatches, and statistical outliers to improve detection of suspicious listings.
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ## Isolation Forest (ISO) - Anomaly Detection
 
 ### Model Selection
@@ -168,7 +189,7 @@ Key feature groups:
 - Enabled fast inference for real-time anomaly detection within the API.
 
 ---
-
+[Back to Tables of Contents](#Tables-of-Contents)
 ## XGBoost (XGB) - Rental Price Prediction
 
 ### Model Selection
@@ -186,6 +207,7 @@ Key feature groups:
 - Delivered low RMSE, providing accurate rental price estimates.
 - Supported actionable insights by flagging over- or under-priced listings compared to predicted values.
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ## Top Features Used in Models
 
 **Isolation Forest (Anomaly Detection) Features:**
@@ -211,6 +233,7 @@ Key feature groups:
 - `Is_Spacious`: Indicator for larger-than-average space.
 - `Rooms_Available`: Number of rooms currently available.
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ## FastAPI Backend Overview
 
 The backend is built with FastAPI to provide a lightweight, high-performance API for rental listing evaluation. It handles:
@@ -227,6 +250,7 @@ The backend is built with FastAPI to provide a lightweight, high-performance API
 
 The API returns structured JSON responses with predicted price, pricing status, anomaly flags, and user-friendly explanations to support informed rental decisions.
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ## Deployment
 
 ### Docker Containerization
@@ -240,6 +264,7 @@ The FastAPI backend is containerized using Docker to ensure portability and cons
 
 This setup allows easy local testing, seamless cloud deployment, and version-controlled builds.
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ### Render Cloud Hosting
 
 The Docker container is deployed on Render.com, it provided the following:
@@ -248,6 +273,7 @@ The Docker container is deployed on Render.com, it provided the following:
 - Free tier availability with 750 monthly runtime hours
 - Auto-scaling and continuous deployment triggered by code pushes
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ### Frontend on GitHub Pages
 
 Made the frontend using ChatGPT model 5 and DeepSeek using the following prompt:
@@ -304,3 +330,4 @@ The user interface is a clean, responsive web form generated via AI prompt engin
 - Handles missing optional inputs gracefully and includes error handling for failed API calls
 
 This separation of frontend (GitHub Pages) and backend (Render) simplifies development and deployment workflows.
+[Back to Tables of Contents](#Tables-of-Contents)
