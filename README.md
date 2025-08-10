@@ -117,3 +117,7 @@ The final dataset contains only:
    - **Correlation Analysis**: Generated correlation matrices to identify relationships between features and target variables.
    - **Distribution Analysis**: Visualized feature distributions using histograms, KDE plots, and box plots to understand data spread and detect outliers.
 
+[Alt](Figure_1.png)
+
+[Alt](Figure2.png)
+
