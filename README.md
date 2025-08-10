@@ -73,6 +73,7 @@ This means no random strangers posting fake properties or inflated prices and la
 
 URL Scraped for 7500 listings: https://bamboohousing.ca/homepage
 
+[Back to Tables of Contents](#Tables-of-Contents)
 ## Feature Engineering with Synthetic Rental Data
 To enhance my dataset for training, I used ChatGPT Model 5 to generate synthetic rows. These rows were created by analyzing patterns, ranges, and distributions from the original real-world Waterloo housing data, specifically features like location, property type, bedroom/bathroom count, amenities, and pricing trends.
 
