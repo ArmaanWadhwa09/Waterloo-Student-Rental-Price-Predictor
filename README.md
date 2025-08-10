@@ -256,6 +256,7 @@ The API returns structured JSON responses with predicted price, pricing status, 
 
 ### Docker Containerization
 
+Built and pushed in Docker Desktop using (docker buildx build --platform linux/amd64 -t armaan09/price-predictor:latest --push .)
 The FastAPI backend is containerized using Docker to ensure portability and consistency across environments. The Dockerfile is based on a lightweight Python 3.10-slim image and includes:
 
 - Installing all dependencies via `requirements.txt`
