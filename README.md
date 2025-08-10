@@ -1,4 +1,5 @@
 # Waterloo Student Rental Predictor  
+**TL;DR**: ML-powered tool that predicts fair rent prices and detects scams for Waterloo students
 ## Introduction
 Welcome to the Waterloo Student Rental Predictor! This project helps students make smarter rental decisions by predicting fair prices and flagging unusual listings in the Waterloo student housing market.
 
@@ -32,7 +33,7 @@ If you’re a student hunting for a good deal, this project provides clear, acti
 8. **Frontend**  
    Create a responsive web form to submit listings and display results, including predicted price, price status, anomaly flags, and detailed feedback.
 
-## Problem Definition  
+## Inspiration :sparkles:
 
 Finding affordable, fairly priced housing near campus is a big challenge for many students, especially international or out-of-town students new to the area. Without good info or tools, it’s easy to overpay or rent places that don’t meet expectations.  
 
