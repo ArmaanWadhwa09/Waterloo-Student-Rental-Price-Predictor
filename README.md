@@ -81,14 +81,14 @@ Your task is to:
 
 3. Final Dataset Columns
 The final dataset contains only:
-- `Price` — numeric, monthly rent in CAD
-- `Address` — realistic street or neighborhood name
-- `Description` — short listing text
-- `Bed_Bath` — e.g., `"3 Bed / 2 Bath"`
-- `Lease_Type` — e.g., `8-month`, `12-month`, `4-month`
-- `Room_Info` — e.g., `single room`, `shared`, `ensuite`, `bachelor`
-- `Gender` — `Male`, `Female`, `Coed`
-- `Scraped_At` — `YYYY-MM-DD`
+- `Price`: numeric, monthly rent in CAD
+- `Address`: realistic street or neighborhood name
+- `Description`: short listing text
+- `Bed_Bath`: e.g., `"3 Bed / 2 Bath"`
+- `Lease_Type`: e.g., `8-month`, `12-month`, `4-month`
+- `Room_Info`: e.g., `single room`, `shared`, `ensuite`, `bachelor`
+- `Gender`: `Male`, `Female`, `Coed`
+- `Scraped_At`: `YYYY-MM-DD`
 
 4. Realism Rules
 - Keep pricing ranges and seasonal demand spikes in line with the original dataset.
@@ -98,11 +98,11 @@ The final dataset contains only:
 - Match the ratio of furnished vs. unfurnished, lease types, and room configurations seen in the scraped data.
 
 5. Engineered additional features for richer modeling:  
-  - Pet_Friendly — Assigned with a ratio of 25–35% based on CMHC reports for student rentals.  
-  - Furnished — Set to 80–95%, reflecting high furnishing rates in student-heavy markets like Waterloo.  
-  - Parking_Included — Assigned with a 50–60% ratio, based on city rental permit studies for student housing.  
-  - Internet_Available — Set to 90–95% availability, as internet is nearly always included in student-oriented rentals.  
-  - Square_Footage — Assigned based on average square footage for a standard room, with variations to reflect real-world ranges.  
+  - Pet_Friendly: Assigned with a ratio of 25–35% based on CMHC reports for student rentals.  
+  - Furnished: Set to 80–95%, reflecting high furnishing rates in student-heavy markets like Waterloo.  
+  - Parking_Included: Assigned with a 50–60% ratio, based on city rental permit studies for student housing.  
+  - Internet_Available: Set to 90–95% availability, as internet is nearly always included in student-oriented rentals.  
+  - Square_Footage: Assigned based on average square footage for a standard room, with variations to reflect real-world ranges.  
 ```
 
 ## Data Preparation and Exploratory Data Analysis
@@ -120,7 +120,7 @@ The final dataset contains only:
 ![Alt text](Figure_1.png)
 ![Alt text](Figure2.png)
 
-### Feature Engineering Overview
+## Feature Engineering Overview
 
 - Created over 130 features tailored for Waterloo student rentals.
 - Focused on capturing key aspects affecting price and desirability.
@@ -145,45 +145,45 @@ Key feature groups:
 - **Anomaly Indicators:**  
   Flags for unusual density, amenity mismatches, and statistical outliers to improve detection of suspicious listings.
 
-### Isolation Forest (ISO) - Anomaly Detection
+## Isolation Forest (ISO) - Anomaly Detection
 
-#### Model Selection
+### Model Selection
 - Chose Isolation Forest for its effectiveness with mixed numeric and categorical data (after encoding) without heavy scaling.
 - Compared with Local Outlier Factor (LOF) and ensemble methods; ISO provided more stable results and fewer false positives.
 - Computationally efficient on 15,000+ records, enabling iterative development and tuning.
 - Hyperparameters tuned using grid search to optimize anomaly detection performance.
 
-#### Feature Reduction and Hyperparameter Tuning
+### Feature Reduction and Hyperparameter Tuning
 - Removed features with high correlation (threshold > 0.9) to reduce redundancy.
 - Trained a Random Forest Regressor to approximate Isolation Forest anomaly scores.
 - Ranked features by importance and applied permutation importance testing to validate impact.
 - Selected top 9 most important features for the final ISO model to reduce noise and improve performance.
 
-#### Results
+### Results
 - Produced stable and interpretable anomaly scores highlighting outliers such as overpriced listings or inconsistent amenity setups.
 - Demonstrated lower false positive rates compared to LOF in dense student housing clusters.
 - Enabled fast inference for real-time anomaly detection within the API.
 
 ---
 
-### XGBoost (XGB) - Rental Price Prediction
+## XGBoost (XGB) - Rental Price Prediction
 
-#### Model Selection
+### Model Selection
 - Evaluated XGBoost alongside LightGBM, CatBoost, and ensemble models for regression.
 - XGBoost outperformed alternatives in terms of R² and RMSE metrics on validation data.
 - Employed Optuna for automated hyperparameter optimization to maximize predictive accuracy.
 
-#### Feature Reduction and Hyperparameter Tuning
+### Feature Reduction and Hyperparameter Tuning
 - Eliminated highly correlated and weakly correlated features with the target variable.
 - Applied Recursive Feature Elimination (RFE) to refine the feature set.
 - Finalized on 10 most predictive features representing rental, room, and lease characteristics.
 
-#### Results
+### Results
 - Achieved R² greater than 0.8 on validation datasets, indicating strong explanatory power.
 - Delivered low RMSE, providing accurate rental price estimates.
 - Supported actionable insights by flagging over- or under-priced listings compared to predicted values.
 
-### Top Features Used in Models
+## Top Features Used in Models
 
 **Isolation Forest (Anomaly Detection) Features:**
 - `Available_Room_Pct`: Percentage of available rooms relative to total rooms.
@@ -208,7 +208,7 @@ Key feature groups:
 - `Is_Spacious`: Indicator for larger-than-average space.
 - `Rooms_Available`: Number of rooms currently available.
 
-### FastAPI Backend Overview
+## FastAPI Backend Overview
 
 The backend is built with FastAPI to provide a lightweight, high-performance API for rental listing evaluation. It handles:
 
@@ -223,3 +223,81 @@ The backend is built with FastAPI to provide a lightweight, high-performance API
 - **Combined Assessment:** Integrates rule-based checks with ML model outputs to provide a comprehensive anomaly flag and detailed explanations for flagged listings.
 
 The API returns structured JSON responses with predicted price, pricing status, anomaly flags, and user-friendly explanations to support informed rental decisions.
+
+## Deployment
+
+### Docker Containerization
+
+The FastAPI backend is containerized using Docker to ensure portability and consistency across environments. The Dockerfile is based on a lightweight Python 3.10-slim image and includes:
+
+- Installing all dependencies via `requirements.txt`
+- Copying application code into the container
+- Exposing port 8000 for API access
+- Launching the app with Uvicorn ASGI server for async performance
+
+This setup allows easy local testing, seamless cloud deployment, and version-controlled builds.
+
+### Render Cloud Hosting
+
+The Docker container is deployed on Render.com, it provided the following:
+
+- Automated container builds from Docker images stored in container registries
+- Free tier availability with 750 monthly runtime hours
+- Auto-scaling and continuous deployment triggered by code pushes
+
+### Frontend on GitHub Pages
+
+Made the frontend using ChatGPT model 5 and DeepSeek using the following prompt:
+```
+Build a responsive rental price predictor web app using:
+Tech Stack: vite_react_shadcn_ts_20250728_minor
+
+Requirements:
+
+Form Fields (with proper HTML5 validation):
+Required:
+Price (number input)
+Baths (number)
+Total Rooms (number)
+Rooms Available (number)
+Optional:
+Furnished (dropdown: Yes/No/None)
+Internet Available (dropdown: Yes/No/None)
+Parking Included (dropdown: Yes/No/None)
+Pet Friendly (dropdown: Yes/No/None)
+Square Footage (Add sq ft or 0 if unsure)
+API Integration:
+POST JSON to https://price-predictor-latest.onrender.com/predict
+Headers: { "Content-Type": "application/json" }
+Handle 4xx/5xx errors with user-friendly alerts
+Results Display:
+Predicted Price (large text, green if within 10% of input price)
+Price Status (e.g., "Overpriced by $200")
+Anomaly Indicator (red flag if anomaly_flag=1)
+Explanation Bullet Points (from API's explanations array)
+UI/UX:
+Mobile-first responsive layout
+Form validation before submission
+Loading state during API calls
+Error boundary for failed fetches
+Dark/light mode support via shadcn
+Code Quality:
+TypeScript interfaces for API request/response
+React Hook Form for state management
+Zod validation schema
+Unit tests for form submission logic
+Deliverables:
+
+Clean, accessible form with proper labels
+Results section with visual hierarchy
+Console-free production build"
+```
+The user interface is a clean, responsive web form generated via AI prompt engineering and hosted on GitHub Pages for fast, reliable static site delivery. The frontend:
+
+- Accepts user input for rental listing details
+- Sends JSON requests to the Render-hosted FastAPI backend
+- Displays predicted prices, anomaly flags, and explanations clearly
+- Supports mobile and desktop devices
+- Handles missing optional inputs gracefully and includes error handling for failed API calls
+
+This separation of frontend (GitHub Pages) and backend (Render) simplifies development and deployment workflows.
