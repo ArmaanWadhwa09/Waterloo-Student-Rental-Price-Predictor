@@ -153,10 +153,6 @@ The final dataset contains only:
    - **Feature Comparison**: Compared column-level values to check for inconsistencies or anomalies.
    - **Correlation Analysis**: Generated correlation matrices to identify relationships between features and target variables.
    - **Distribution Analysis**: Visualized feature distributions using histograms, KDE plots, and box plots to understand data spread and detect outliers.
-
-![Alt text](Figure_1.png)
-![Alt text](Figure2.png)
-
 ## Feature Engineering Overview
 
 - Created over 130 features tailored for Waterloo student rentals.
