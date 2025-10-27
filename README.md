@@ -1,7 +1,7 @@
-# RentGuard: Predictive & Anomaly Rental Engine (Waterloo)
+# RentGuard: Predictive & Anomaly Rental Engine
 **TL;DR**: ML-powered tool that predicts fair rent prices and detects scams for Waterloo students
 ## 🚀 Try the Model
-➡️ Web App: https://armaanwadhwa09.github.io/RentGuard-Frontend/ 
+➡️ Web App: [https://armaanwadhwa09.github.io/RentGuard-Frontend/](https://armaanwadhwa09.github.io/RentGuard-Frontend/)
 
 *(No installation needed - test predictions directly in your browser)*
 
